@@ -14,7 +14,6 @@ class AdminMenu extends Base
 {
     public function __construct()
     {
-        $this->protected_menu = range(1, 80);
         parent::__construct();
     }
 
@@ -118,7 +117,7 @@ class AdminMenu extends Base
         $info = AdminMenus::get($this->id);
 
         //不允许修改的菜单，首页和个人资料页，还是多加点吧
-        if (in_array($this->id, $this->protected_menu) && $this->uid != 1) {
+        if ( $this->uid != 1) {
             return $this->error('此菜单不允许修改');
         }
         if ($this->request->isPost()) {
@@ -150,9 +149,7 @@ class AdminMenu extends Base
     //删除
     public function del()
     {
-        if (in_array($this->id, $this->protected_menu)) {
-            return $this->error('此菜单不允许删除');
-        }
+
         $map_son        = ['parent_id' => $this->id];
         $admin_menu_son = AdminMenus::get($map_son);
         if ($admin_menu_son) {

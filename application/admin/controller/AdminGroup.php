@@ -39,7 +39,10 @@ class AdminGroup extends Base
             }
             //默认写入首页和个人资料权限
             $param['rules'] = '1,2';
-
+            $result=AdminGroups::all(['name'=>$this->param['name']]);
+            if($result){
+                return $this->error("角色名称已存在");
+            }
             $role = new AdminGroups();
             if ($role->create($param)) {
                 return $this->success();
@@ -62,7 +65,12 @@ class AdminGroup extends Base
             if (true !== $result) {
                 return $this->error($result);
             }
-
+            if($this->param['name']!=$this->param['checkname']){
+                $result=AdminGroups::all(['name'=>$this->param['name']]);
+                if($result){
+                    return $this->error("角色名称已存在");
+                }
+            }
             $info = AdminGroups::get($this->id);
             if ($info->save($this->param)) {
                 return $this->success();

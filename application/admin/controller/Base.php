@@ -230,7 +230,6 @@ class Base extends Controller
         $this->webData['current_nav'] = $current_nav[1];
 
         $tree = new Tree();
-
         foreach ($menu as $k => $v) {
             $url               = url($v['url']);
             $menu[$k]['icon']  = !empty($v['icon']) ? $v['icon'] : 'fa fa-list';

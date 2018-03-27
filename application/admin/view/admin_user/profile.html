@@ -25,7 +25,6 @@
             <ul class="nav nav-tabs">
                 <li class="active"><a href="#profile" data-toggle="tab" aria-expanded="true">个人信息</a></li>
                 <li class=""><a href="#privacy" data-toggle="tab" aria-expanded="false">修改密码</a></li>
-                <li class=""><a href="#avatars" data-toggle="tab" aria-expanded="false">修改头像</a></li>
             </ul>
             <div class="tab-content">
                 <div class="tab-pane active" id="profile">
@@ -85,24 +84,6 @@
                             <div class="col-sm-10">
                                 <input type="password" class="form-control" name="newpassword_do" id="newpassword_do"
                                        placeholder="再次输入新密码">
-                            </div>
-                        </div>
-                        {:token()}
-                        <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-10">
-                                <button type="submit" class="btn btn-danger">保存</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="tab-pane" id="avatars">
-                    <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
-                        <input type="hidden" value="avatar" name="update_type" placeholder="请勿淘气修改">
-                        <div class="form-group">
-                            <label for="avatar" class="col-sm-2 control-label">头像</label>
-                            <div class="col-sm-10">
-                                <input type="file" class="form-control" name="avatar" id="avatar"
-                                       placeholder="头像可空">
                             </div>
                         </div>
                         {:token()}

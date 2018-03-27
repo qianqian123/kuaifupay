@@ -26,10 +26,8 @@ class Index extends Base
             'date'    => date('Y-m-d')
         ];
 
-        $Parsedown = new Parsedown();
 
         $this->assign([
-            'readme'=> $Parsedown->text(file_get_contents(ROOT_PATH.'README.md')),
             'sys'      => $sys_info,
         ]);
         return $this->fetch();

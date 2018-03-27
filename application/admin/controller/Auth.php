@@ -36,26 +36,20 @@ class Auth extends Base
                 'name'     => $this->param['name'],
                 'password' => md5($this->param['password']),
             ];
-
             $user = AdminUsers::get($data);
             if (!$user) {
                 return $this->error('用户名或密码错误');
             }
-
             if ($user->status != 1) {
                 return $this->error('账户被冻结');
             }
-
             $remember = $this->param['is_remember'] == 1 ? true : false;
-
             AdminAuth::login($user['id'], $user['name'], $remember);
-
             //手动加入日志
             $auth = new AdminAuth();
             $this->request->param('password', '');
             $auth->createLog('登录', 2);
             $redirect_uri = isset($this->param['uri']) ? $this->param['uri'] : 'admin/index/index';
-
             return $this->success('登录成功', $redirect_uri);
         }
 

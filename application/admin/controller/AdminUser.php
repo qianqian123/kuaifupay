@@ -48,21 +48,12 @@ class AdminUser extends Base
                 return $this->error($result);
             }
 
-            $save_name = null;
-            $file      = request()->file('avatar');
-            if ($file != null) {
-                $file_info = $file->move(config('admin_avatar.upload_path'));
-                if (!$file_info) {
-                    return $this->error($file->getError());
-                }
-                $save_name = $file_info->getSaveName();
+            $this->param['password'] = md5($this->param['password']);
+            $result=AdminUsers::all(['name'=>$this->param['name']]);
+            if($result){
+                return $this->error("用户名已存在");
             }
 
-            if ($save_name) {
-                $this->param['avatar'] = $save_name;
-            }
-            
-            $this->param['password'] = md5($this->param['password']);
             $user = AdminUsers::create($this->param);
             if ($user) {
                 $roles = $this->param['parent_id'];
@@ -71,7 +62,6 @@ class AdminUser extends Base
                     array_push($group, ['uid' => $user->id, 'group_id' => $value]);
                 }
                 $user->adminGroup()->saveAll($group);
-                
                 return $this->success();
             }
             return $this->error();
@@ -105,30 +95,21 @@ class AdminUser extends Base
             if (true !== $result) {
                 return $this->error($result);
             }
-
-            $file      = request()->file('avatar');
-            $save_name = '';
-            if ($file != null) {
-                $file_info = $file->move(config('admin_avatar.upload_path') . $this->id);
-
-                if (!$file_info) {
-                    return $this->error($file->getError());
+            if($this->param['name']!=$this->param['checkname']){
+                $result=AdminUsers::all(['name'=>$this->param['name']]);
+                if($result){
+                    return $this->error("用户名已存在");
                 }
-                $save_name = $this->id . DS . $file_info->getSaveName();
-            }
-
-            if ($save_name != '') {
-                $this->param['avatar'] = $save_name;
             }
 
             if (!empty($this->param['password'])) {
                 $this->param['password'] = md5($this->param['password']);
             }
-
             if (false !== $info->save($this->param)) {
                 $info->adminGroup()->delete();
                 $group = [];
                 $roles = $this->param['parent_id'];
+
                 foreach ($roles as $key => $value) {
                     array_push($group, ['uid' => $this->id, 'group_id' => $value]);
                 }
@@ -188,21 +169,6 @@ class AdminUser extends Base
                     return $this->error('当前密码不正确');
                 }
                 $this->param['password'] = md5($this->param['newpassword']);
-            } else if ($this->param['update_type'] == 'avatar') {
-                $save_name = '';
-                $file      = request()->file('avatar');
-                if ($file != null) {
-                    $info = $file->move(config('admin_avatar.upload_path') . DS . $this->uid);
-                    if ($info) {
-                        $save_name = $this->uid . DS . $info->getSaveName();
-                    } else {
-                        return $this->error($file->getError());
-                    }
-                }
-
-                if ($save_name != '') {
-                    $this->param['avatar'] = $save_name;
-                }
             }
             if (false !== $user->save($this->param)) {
                 return $this->success();
