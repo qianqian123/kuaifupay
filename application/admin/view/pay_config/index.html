@@ -1,0 +1,85 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#wxconfig" data-toggle="tab" aria-expanded="true">微信支付配置</a></li>
+                <li class=""><a href="#authorize" data-toggle="tab" aria-expanded="false">支付宝支付授权</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="wxconfig">
+                    <form class="form-horizontal" action="" method="post">
+                        <input type="hidden" value="profile" name="weixin" placeholder="请勿修改">
+
+                        <div class="form-group">
+                            <label for="sub_mch_id" class="col-sm-2 control-label">微信支付商户号</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" value="{$wxconfig->sub_mch_id}" name="sub_mch_id" id="sub_mch_id" maxlength="30">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="secret_key" class="col-sm-2 control-label">微信支付安全密钥</label>
+                            <div class="col-sm-10">
+                                <input type="tel" class="form-control" value="{$wxconfig->secret_key}" name="secret_key" id="secret_key" placeholder="安全密钥">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="cacert_path" class="col-sm-2 control-label">上传证书</label>
+                            <div class="col-sm-10">
+                                <input type="email" class="form-control" value="{$wxconfig->cacert_path}" name="cacert_path" id="cacert_path" placeholder=".zip格式">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="is_specially" class="col-sm-2 control-label">特约商户</label>
+                            <div class="col-sm-10">
+                                <input type="email" class="form-control" value="{$wxconfig->is_specially}" name="is_specially" id="is_specially" placeholder="邮箱">
+                            </div>
+                        </div>
+                        {:token()}
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-danger">保存</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="tab-pane" id="authorize">
+                    <section class="content">
+                        <div class="callout callout-danger">
+                            <h4>口碑授权</h4>
+                            <p>本功能需要您签约当面付2.0接口</p>
+                        </div>
+                        <div class="col-sm-offset-6 col-sm-10">
+                            <button class="btn btn-danger btn-lg" data-target="#myModal">我要授权</button>
+                        </div>
+                    </section>
+
+                    <div class="modal fade" id="myModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                        &times;
+                                    </button>
+                                    <h4 class="modal-title" id="myModalLabel">
+                                        模态框（Modal）标题
+                                    </h4>
+                                </div>
+                                <div class="modal-body">
+                                    在这里添加一些文本
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                                    </button>
+                                    <button type="button" class="btn btn-primary">
+                                        提交更改
+                                    </button>
+                                </div>
+                            </div><!-- /.modal-content -->
+                        </div><!-- /.modal -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

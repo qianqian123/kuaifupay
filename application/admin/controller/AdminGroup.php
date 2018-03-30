@@ -17,7 +17,7 @@ class AdminGroup extends Base
     public function index()
     {
         $AdminGroups = new AdminGroups();
-        $roles       = $AdminGroups->paginate($this->webData['list_rows']);
+        $roles= $AdminGroups->where('token','=',$this->token)->paginate($this->webData['list_rows']);
 
         $this->assign([
             'lists' => $roles,

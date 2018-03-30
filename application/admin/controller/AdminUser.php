@@ -25,6 +25,7 @@ class AdminUser extends Base
 
         $lists = $model
             ->where('id', '<>', '1')
+            ->where('token','=',$this->token)
             ->relation('adminGroup')
             ->order('id desc')
             ->paginate($this->webData['list_rows'], false, $page_param);
@@ -53,8 +54,11 @@ class AdminUser extends Base
             if($result){
                 return $this->error("用户名已存在");
             }
-
-            $user = AdminUsers::create($this->param);
+            $data=$this->param;
+            $data['token']=$this->token;
+            $data['pid']=$this->uid;
+            $data['agent_belong']=$this->agent_belong;
+            $user = AdminUsers::create($data);
             if ($user) {
                 $roles = $this->param['parent_id'];
                 $group = [];

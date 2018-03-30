@@ -177,12 +177,13 @@ if (!function_exists('get_list_rows')) {
      */
     function get_list_rows()
     {
-        $rows = Config::get('list_rows') ? Config::get('list_rows') : 10;
         if (isset($_COOKIE['backend_list_rows'])) {
             $c_rows = $_COOKIE['backend_list_rows'];
             if (0 < $c_rows && 100 >= $c_rows) {
                 $rows = $c_rows;
             }
+        }else{
+            $rows = Config::get('list_rows') ? Config::get('list_rows') : 10;
         }
         return intval($rows);
     }

@@ -194,14 +194,16 @@ class AdminAuth
 
 
     //用户登录
-    public static function login($id, $name, $remember = false)
+    public static function login($user, $remember = false)
     {
-        if (empty($id) && empty($name)) {
+        if (empty($user['id']) && empty($user['name'])) {
             return false;
         }
         $user = [
-            'id'   => $id,
-            'name' => $name,
+            'id'   => $user['id'],
+            'name' => $user['name'],
+            'token' => $user['token'],
+            'agent_belong' => $user['agent_belong'],
             'timestamp' => time()
         ];
 

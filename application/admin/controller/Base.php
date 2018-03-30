@@ -22,6 +22,8 @@ class Base extends Controller
 
     protected $webData;
     protected $id;
+    protected $token;
+    protected $agent_belong;
 
     protected $module;
     protected $controller;
@@ -79,6 +81,8 @@ class Base extends Controller
                 $this->redirect('auth/login');
             }
             $this->uid = Session::get('user.id');
+            $this->token = Session::get('user.token');
+            $this->agent_belong = Session::get('user.agent_belong');
             if ($this->uid != 1) {
                 if (!$auth->check($this->url, $this->uid)) {
 
